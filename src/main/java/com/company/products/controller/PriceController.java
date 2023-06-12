@@ -25,9 +25,7 @@ public class PriceController {
 
         Price price = service.findPrice(request.getApplicationDate(), request.getProductId(), request.getBrandId());
 
-        PriceResponse priceResponse = convertToPriceResponse(price);
-
-        return priceResponse;
+        return convertToPriceResponse(price);
     }
 
     private PriceResponse convertToPriceResponse(Price price) {
