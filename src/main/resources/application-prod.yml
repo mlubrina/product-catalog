@@ -1,0 +1,12 @@
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://localhost:3306/mydatabase?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: myuser
+    password: mypassword
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
