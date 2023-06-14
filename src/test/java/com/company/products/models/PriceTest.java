@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PriceTest {
 
   @Test
-  @DisplayName("Test Getters and Setters")
+  @DisplayName("Test should get and set OK")
   void gettersAndSetters() {
     Price price = new Price();
 

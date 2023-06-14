@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+@DisplayName("Price Service Test")
 public class PriceServiceTest {
 
   @Mock
@@ -27,14 +28,15 @@ public class PriceServiceTest {
   }
 
   @Test
-  @DisplayName("Test findPrice - Returns Price")
+  @DisplayName("Test findPrice should Returns Price")
   void testFindPriceReturnsPrice() {
     // Mock data
     LocalDateTime applicationDate = LocalDateTime.of(2023, 6, 13, 0, 0);
     Long productId = 123L;
     Long brandId = 456L;
     Price expectedPrice = new Price();
-    when(repository.findByBrandIdAndProductIdAndApplicationDate(brandId, productId, applicationDate))
+    when(
+        repository.findByBrandIdAndProductIdAndApplicationDate(brandId, productId, applicationDate))
         .thenReturn(expectedPrice);
 
     Price actualPrice = service.findPrice(applicationDate, productId, brandId);

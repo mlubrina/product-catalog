@@ -1,46 +1,59 @@
 package com.company.products.exceptions;
 
 import com.company.products.enums.ValidationError;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("Global Exception Handler Test")
-class GlobalExceptionHandlerTest {
+public class GlobalExceptionHandlerTest {
 
-  @Test
-  @DisplayName("Test should Handle ValidationException")
-  void handleValidationException() {
-    ValidationException ex = new ValidationException(ValidationError.INVALID_APPLICATION_DATE);
+  private GlobalExceptionHandler handler;
 
-    GlobalExceptionHandler exceptionHandler = new GlobalExceptionHandler();
-
-    ResponseEntity<String> response = exceptionHandler.handleValidationException(ex);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(ValidationError.INVALID_APPLICATION_DATE.getMessage(), response.getBody());
+  @BeforeEach
+  public void setUp() {
+    handler = new GlobalExceptionHandler();
   }
 
   @Test
-  @DisplayName("Test should Handle BindException")
-  void handleBindException() {
-    Object boundForm = new Object();
+  @DisplayName("Test should validate exception handling")
+  public void testHandleValidationException() {
+    ValidationError errorMessage = ValidationError.INVALID_PRODUCT_ID;
+    ValidationException exception = new ValidationException(errorMessage);
 
-    BindException ex = new BindException(boundForm, null);
+    ResponseEntity<String> responseEntity = handler.handleValidationException(exception);
 
-    GlobalExceptionHandler exceptionHandler = new GlobalExceptionHandler();
-
-    ResponseEntity<List<String>> response = exceptionHandler.handleBindException(ex);
-
-    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-    assertEquals(Arrays.asList(), response.getBody());
+    assertEquals(errorMessage.getMessage(), responseEntity.getBody());
+    assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
   }
 
+  @Test
+  @DisplayName("Test should bind exception handling")
+  public void testHandleBindException() {
+    BindException ex = new BindException(new Object(), "testObjectName");
+    ex.addError(createFieldError("applicationDate"));
+    ex.addError(createFieldError("productId"));
+    ex.addError(createFieldError("brandId"));
+
+    ResponseEntity<List<String>> responseEntity = handler.handleBindException(ex);
+
+    assertEquals(3, responseEntity.getBody().size());
+    assertEquals(ValidationError.INVALID_APPLICATION_DATE.getMessage(),
+        responseEntity.getBody().get(0));
+    assertEquals(ValidationError.INVALID_PRODUCT_ID.getMessage(), responseEntity.getBody().get(1));
+    assertEquals(ValidationError.INVALID_BRAND_ID.getMessage(), responseEntity.getBody().get(2));
+    assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+  }
+
+  private FieldError createFieldError(String field) {
+    return new FieldError("objectName", field, "defaultMessage");
+  }
 }

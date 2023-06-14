@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ValidationUtilsTest {
 
   @Test
-  @DisplayName("Test Valid PriceRequest")
+  @DisplayName("Test should check Valid PriceRequest")
   void validatePriceRequest_ValidRequest() throws ValidationException {
     PriceRequest request = new PriceRequest();
     request.setApplicationDate(LocalDateTime.now());
@@ -24,7 +24,7 @@ public class ValidationUtilsTest {
   }
 
   @Test
-  @DisplayName("Test Missing Application Date")
+  @DisplayName("Test should check Missing Application Date")
   void validatePriceRequest_MissingApplicationDate() {
     PriceRequest request = new PriceRequest();
     request.setProductId(123L);
@@ -36,7 +36,7 @@ public class ValidationUtilsTest {
   }
 
   @Test
-  @DisplayName("Test Missing Product ID")
+  @DisplayName("Test should check Missing Product ID")
   void validatePriceRequest_MissingProductId() {
     PriceRequest request = new PriceRequest();
     request.setApplicationDate(LocalDateTime.now());
@@ -48,7 +48,7 @@ public class ValidationUtilsTest {
   }
 
   @Test
-  @DisplayName("Test Invalid Product ID")
+  @DisplayName("Test should check Invalid Product ID")
   void validatePriceRequest_InvalidProductId() {
     PriceRequest request = new PriceRequest();
     request.setApplicationDate(LocalDateTime.now());
@@ -61,7 +61,7 @@ public class ValidationUtilsTest {
   }
 
   @Test
-  @DisplayName("Test Missing Brand ID")
+  @DisplayName("Test should check Missing Brand ID")
   void validatePriceRequest_MissingBrandId() {
     PriceRequest request = new PriceRequest();
     request.setApplicationDate(LocalDateTime.now());
@@ -73,7 +73,7 @@ public class ValidationUtilsTest {
   }
 
   @Test
-  @DisplayName("Test Invalid Brand ID")
+  @DisplayName("Test should check Invalid Brand ID")
   void validatePriceRequest_InvalidBrandId() {
     PriceRequest request = new PriceRequest();
     request.setApplicationDate(LocalDateTime.now());
