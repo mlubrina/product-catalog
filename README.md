@@ -59,6 +59,26 @@ simulated environment.
 For unit testing individual components and services, we use standard unit testing frameworks such as
 JUnit and Mockito. This allows us to isolate and test specific parts of the application.
 
+And We employ one strategy for unit testing:
+
+### System tests with bash script
+Run the script by executing the command: 
+```bash
+./system-test.sh
+```
+Then You will get the results from command line, this can be included as part of CI/CD pipeline:
+```
+Start System Tests
+Test 0 passed: Response {"productId":35455,"brandId":1,"priceList":1,"startDate":"2020-06-14T00:00:00","endDate":"2020-12-31T23:59:59","price":35.5} matches expected result for parameter: http://localhost:8080/prices?applicationDate=2020-06-14T00:00:00&productId=35455&brandId=1
+Test 1 passed: Response {"productId":35455,"brandId":1,"priceList":2,"startDate":"2020-06-14T15:00:00","endDate":"2020-06-14T18:30:00","price":25.45} matches expected result for parameter: http://localhost:8080/prices?applicationDate=2020-06-14T15:20:00&productId=35455&brandId=1
+Test 2 passed: Response {"productId":35455,"brandId":1,"priceList":3,"startDate":"2020-06-15T00:00:00","endDate":"2020-06-15T11:00:00","price":30.5} matches expected result for parameter: http://localhost:8080/prices?applicationDate=2020-06-15T00:10:00&productId=35455&brandId=1
+Test 3 passed: Response {"productId":35455,"brandId":1,"priceList":4,"startDate":"2020-06-15T16:00:00","endDate":"2020-12-31T23:59:59","price":38.95} matches expected result for parameter: http://localhost:8080/prices?applicationDate=2020-06-15T16:10:00&productId=35455&brandId=1
+End System Tests
+```
+
+
+
+
 ## Prerequisites
 
 - Java 11
